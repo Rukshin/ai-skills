@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ai-skills",
+  "description": "Personal AI skills for daily work and personal projects.",
+  "owner": {
+    "name": "Jordi Pulido"
+  },
+  "plugins": [
+    {
+      "name": "ai-skills",
+      "description": "Personal AI skills for daily work and personal projects.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Jordi Pulido"
+      },
+      "source": "./plugin",
+      "category": "productivity",
+      "homepage": "https://github.com/Rukshin/ai-skills"
+    }
+  ]
+}
