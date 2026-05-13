@@ -1,0 +1,11 @@
+{
+  "name": "ai-skills",
+  "description": "Personal AI skills for daily work and personal projects.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jordi Pulido"
+  },
+  "homepage": "https://github.com/Rukshin/ai-skills",
+  "repository": "https://github.com/Rukshin/ai-skills",
+  "license": "MIT"
+}
