@@ -13,7 +13,6 @@ claude plugin install ai-skills@ai-skills
 
 | Skill | Description |
 |-------|-------------|
-| `grill-me` | Stress-tests a plan or design by interviewing relentlessly until every branch resolves |
 | `wiki-ingest` | Compiles a raw source (file or URL) into the LLM Wiki at `Atlas/Wiki/` |
 | `wiki-query` | Answers questions from compiled LLM Wiki pages with citations |
 | `wiki-lint` | Health-checks the LLM Wiki — finds orphans, dead links, contradictions, and drift |
