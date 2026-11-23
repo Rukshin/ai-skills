@@ -1,0 +1,12 @@
+{
+  "wiki_root": "Atlas/Wiki",
+  "raw": "+/raw",
+  "manifest": "+/raw/.manifest.json",
+  "attachments": "x/Images",
+  "index": "index.md",
+  "hot": "hot.md",
+  "log": "log.md",
+  "language": "en",
+  "areas": [],
+  "fetchers": ["firecrawl-scrape", "webfetch"]
+}

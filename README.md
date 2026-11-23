@@ -24,14 +24,40 @@ claude plugin install ai-skills@ai-skills
 ai-skills/
 ├── .claude-plugin/
 │   └── marketplace.json
+├── tests/                ← node:test suite and fixtures
 └── plugin/
     ├── .claude-plugin/
     │   └── plugin.json
+    ├── lib/config.ts         ← vault config resolver
+    ├── scripts/wiki-config.ts
+    ├── templates/wiki.json
     ├── _shared/
     │   └── cli-commands.md   ← shared Obsidian CLI reference for wiki skills
     └── skills/
         └── <skill-name>/
             └── SKILL.md
+```
+
+## Vault config (`.wiki.json`)
+
+The wiki skills read their paths from a per-vault `.wiki.json` at the vault root (template and key docs: `plugin/templates/wiki.json`, `plugin/templates/wiki.json.md`).
+
+Resolution order (fails closed, never guesses a vault):
+
+1. Nearest `.wiki.json` walking up from the working directory.
+2. Nearest `Atlas/Wiki/SCHEMA.md` with `type: llm-wiki` (uses `wiki_root`, `raw`, `index`, `hot`, `log`, `areas`; missing keys take defaults).
+3. Otherwise an error listing the directories searched.
+
+Run the resolver (Node >= 22.18, or bun; no dependencies):
+
+```bash
+node plugin/scripts/wiki-config.ts [--start DIR]   # JSON on stdout; exit 0 ok, 1 error, 2 bad usage
+```
+
+Run the tests:
+
+```bash
+npm test        # same as: node --test
 ```
 
 ## Adding skills
