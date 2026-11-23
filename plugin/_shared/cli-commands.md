@@ -58,9 +58,8 @@ find "<dir>" -name "*.md" | sort | while read f; do md5 -q "$f"; done | md5 -q
 # Delete a processed raw file (after user confirmation)
 rm ~/Code/mine/pkm/+/raw/[filename].md
 
-# Move local images instead of deleting
-mkdir -p ~/Code/mine/pkm/x/Wiki
-mv ~/Code/mine/pkm/+/raw/[image-file] ~/Code/mine/pkm/x/Wiki/
+# Move local images instead of deleting: move them to the vault attachments folder
+mv ~/Code/mine/pkm/+/raw/[image-file] [vault attachments folder]/
 ```
 
 ## Contradiction callout format

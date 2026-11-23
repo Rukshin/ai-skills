@@ -35,7 +35,7 @@ Load when the user invokes `/wiki-ingest`, drops a file path inside `+/raw/` or 
 3. **Read source** — file: `obsidian read path="..."`. URL: invoke the `firecrawl-scrape` skill and capture its markdown output.
 4. **Discuss before writing** — share 3–5 key takeaways, proposed pages, and any contradictions with existing wiki content; use `AskUserQuestion` to confirm emphasis. Do not skip.
 5. **Write pages** — in order: source summary page → concept pages (create or update) → person pages (create or update) → add `[!contradiction]` callouts where conflicts exist.
-6. **Update housekeeping** — update `index_path` → prepend to `Atlas/Wiki/log.md` → update `hot_path` → update manifest → delete raw file (ask first; if it contains local images, move them to `x/Wiki/` instead).
+6. **Update housekeeping** — update `index_path` → prepend to `Atlas/Wiki/log.md` → update `hot_path` → update manifest → delete raw file (ask first; if it contains local images, move them to the vault attachments folder instead).
 
 ## Output Contract
 
@@ -47,5 +47,5 @@ Report back with:
 
 ## References
 
-- `../_shared/cli-commands.md` — all obsidian CLI commands, hash/manifest formats, contradiction callout syntax
+- `../../_shared/cli-commands.md` — all obsidian CLI commands, hash/manifest formats, contradiction callout syntax
 - `Atlas/Wiki/SCHEMA.md` (vault) — naming conventions, frontmatter format, page structures, collision resolution

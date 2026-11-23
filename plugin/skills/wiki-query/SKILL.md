@@ -46,5 +46,5 @@ User can specify mode explicitly ("quick query:", "deep query:"). Otherwise infe
 
 ## References
 
-- `../_shared/cli-commands.md` — obsidian CLI command syntax
+- `../../_shared/cli-commands.md` — obsidian CLI command syntax
 - `Atlas/Wiki/SCHEMA.md` (vault) — question page format and naming conventions

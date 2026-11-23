@@ -23,12 +23,15 @@ claude plugin install ai-skills@ai-skills
 ```
 ai-skills/
 ├── .claude-plugin/
-│   └── plugin.json
-├── _shared/
-│   └── cli-commands.md   ← shared Obsidian CLI reference for wiki skills
-└── skills/
-    └── <skill-name>/
-        └── SKILL.md
+│   └── marketplace.json
+└── plugin/
+    ├── .claude-plugin/
+    │   └── plugin.json
+    ├── _shared/
+    │   └── cli-commands.md   ← shared Obsidian CLI reference for wiki skills
+    └── skills/
+        └── <skill-name>/
+            └── SKILL.md
 ```
 
 ## Adding skills

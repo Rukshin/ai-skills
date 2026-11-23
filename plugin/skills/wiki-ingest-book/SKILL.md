@@ -1,6 +1,10 @@
 ---
 name: wiki-ingest-book
-description: Ingests a ChatGPT Exporter JSON file (a book club conversation) into Jordi's PKM vault. Creates personal book notes at Atlas/Dots/Fiction/ (Jordi's layer) and analytical wiki pages at Atlas/Wiki/Fiction/ (LLM layer) — characters, themes, worldbuilding, author, and source pages. Use when the user drops a JSON file from ChatGPT Exporter and wants it compiled into the vault, says "ingest this book conversation", or "process this reading conversation".
+description: "Trigger: user drops a ChatGPT Exporter JSON of a book club conversation, or says 'ingest this book conversation'. Compiles it into book notes and wiki pages in the PKM vault."
+license: MIT
+metadata:
+  author: jordi.pulido
+  version: "2.0.0"
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 
