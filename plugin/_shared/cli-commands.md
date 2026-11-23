@@ -1,48 +1,50 @@
 # Wiki Skills — Obsidian CLI Reference
 
-All commands use the `obsidian` CLI. Obsidian must be open and focused — commands hang indefinitely without a running instance.
+Paths below use config placeholders resolved by `plugin/scripts/wiki-config.ts` (`{wiki_root}`, `{raw}`, `{manifest}`, `{attachments}`, `{index}`, `{hot}`, `{log}`); `index`, `hot` and `log` are relative to `{wiki_root}`. Replace them with the resolved values; paths are vault-relative.
+
+**File tools first.** The Read/Write/Edit tools work with Obsidian closed and are the primary way to touch vault files. The `obsidian` CLI is optional: it needs Obsidian open and focused and hangs indefinitely otherwise, so always wrap it in a time limit (e.g. `timeout 20 obsidian ...`) and fall back to file tools on failure or timeout.
 
 ## Reading
 
 ```bash
 # Read by exact vault path
-obsidian read path="Atlas/Wiki/hot.md"
+obsidian read path="{wiki_root}/{hot}"
 
 # Read by wikilink name resolution
 obsidian read file="Hexagonal Architecture"
 
 # Get note headings (quick structure check before full read)
-obsidian outline path="Atlas/Wiki/[Page].md" format=json
+obsidian outline path="{wiki_root}/[Page].md" format=json
 
 # List files in a folder
-obsidian files folder="Atlas/Wiki"
-obsidian files folder="+/raw"
+obsidian files folder="{wiki_root}"
+obsidian files folder="{raw}"
 
 # Search with context lines
-obsidian search:context query="hexagonal" path="Atlas/Wiki"
+obsidian search:context query="hexagonal" path="{wiki_root}"
 ```
 
 ## Writing
 
 ```bash
 # Create a new file
-obsidian create path="Atlas/Wiki/[Page].md" content="..." silent
+obsidian create path="{wiki_root}/[Page].md" content="..." silent
 
 # Overwrite an existing file
-obsidian create path="Atlas/Wiki/[Page].md" content="..." overwrite silent
+obsidian create path="{wiki_root}/[Page].md" content="..." overwrite silent
 
 # Prepend content (newest-first logs)
-obsidian prepend path="Atlas/Wiki/log.md" content="..."
+obsidian prepend path="{wiki_root}/{log}" content="..."
 
 # Set a single frontmatter property
-obsidian property:set name="modified" value="YYYY-MM-DD" path="Atlas/Wiki/[Page].md"
+obsidian property:set name="modified" value="YYYY-MM-DD" path="{wiki_root}/[Page].md"
 ```
 
 ## Delta check (manifest)
 
 ```bash
 # Read manifest
-obsidian read path="+/raw/.manifest.json"
+obsidian read path="{manifest}"
 # or use Read tool if CLI can't handle .json
 
 # Hash a local file
@@ -56,10 +58,10 @@ find "<dir>" -name "*.md" | sort | while read f; do md5 -q "$f"; done | md5 -q
 
 ```bash
 # Delete a processed raw file (after user confirmation)
-rm ~/Code/mine/pkm/+/raw/[filename].md
+rm "<vaultRoot>/{raw}/[filename].md"
 
 # Move local images instead of deleting: move them to the vault attachments folder
-mv ~/Code/mine/pkm/+/raw/[image-file] [vault attachments folder]/
+mv "<vaultRoot>/{raw}/[image-file]" "<vaultRoot>/{attachments}/"
 ```
 
 ## Contradiction callout format

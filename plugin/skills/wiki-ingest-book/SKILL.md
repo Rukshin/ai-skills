@@ -12,13 +12,13 @@ allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 
 Process a ChatGPT Exporter JSON file into Jordi's PKM vault. The conversation is a reading club discussion between Jordi and a custom GPT about one or more books.
 
-> **Prerequisite**: Obsidian must be open and focused. The CLI communicates via IPC to the running app — if Obsidian is closed or backgrounded, commands hang indefinitely. Ask Jordi to open it first if needed.
+> **Obsidian CLI is optional**: file tools (Read/Write/Edit) are primary. The `obsidian` CLI talks to the running app and hangs indefinitely if Obsidian is closed or backgrounded, so run it with a time limit (e.g. `timeout 20 obsidian ...`) and fall back to file tools on failure.
 
-Read `Atlas/Wiki/SCHEMA.md` section 8 before starting — it defines the Fiction domain conventions, language rules (Spanish), page types, and folder structure.
+Read `{wiki_root}/SCHEMA.md` section 8 before starting — it defines the Fiction domain conventions, language rules (Spanish), page types, and folder structure.
 
 ## Input
 
-A JSON file path in `+/raw/` exported by ChatGPT Exporter. Format:
+A JSON file path in `{raw}/` exported by ChatGPT Exporter. Format:
 ```json
 {
   "metadata": { "title": "...", "dates": {...}, "link": "https://chatgpt.com/..." },
@@ -30,6 +30,10 @@ A JSON file path in `+/raw/` exported by ChatGPT Exporter. Format:
 ```
 
 ## Workflow
+
+### 0. Resolve vault config
+
+Run `node <skill-dir>/../../scripts/wiki-config.ts --start "$PWD"` (`<skill-dir>` is the directory containing this SKILL.md; the script is at `plugin/scripts/wiki-config.ts` from the plugin root). Read the JSON from stdout and use these keys: `wiki_root`, `raw`, `manifest`, `attachments`, `index`, `hot`, `log`, `language`, `areas`, `fetchers`. Paths are vault-relative to `vaultRoot`; `index`, `hot` and `log` are relative to `{wiki_root}`. On exit 1 or 2, stop and show stderr — never guess a vault. If `node` is unavailable or older than 22.18, apply the same rules by hand: nearest `.wiki.json` walking up, else nearest `Atlas/Wiki/SCHEMA.md` with `type: llm-wiki`, else stop.
 
 ### 1. Parse the JSON
 
@@ -51,11 +55,11 @@ Extract:
 Check what already exists:
 
 ```bash
-obsidian read path="Atlas/Wiki/hot.md"
-obsidian read path="Atlas/Wiki/index.md"
+obsidian read path="{wiki_root}/{hot}"
+obsidian read path="{wiki_root}/{index}"
 ```
 
-If `Atlas/Wiki/Fiction/Fiction.md` exists, read it too to avoid duplicating existing pages.
+If `{wiki_root}/Fiction/Fiction.md` exists, read it too to avoid duplicating existing pages.
 
 ### 3. Discuss with Jordi before writing
 
@@ -135,11 +139,11 @@ in:
 
 Body: wikilinks to individual book notes + one-line arc summary.
 
-### 6. Create Atlas/Wiki/Fiction/ pages
+### 6. Create {wiki_root}/Fiction/ pages
 
-All pages in Spanish. All go under `Atlas/Wiki/Fiction/`.
+All pages in Spanish. All go under `{wiki_root}/Fiction/`.
 
-**6a. Fiction MOC** — create `Atlas/Wiki/Fiction/Fiction.md` if it doesn't exist yet:
+**6a. Fiction MOC** — create `{wiki_root}/Fiction/Fiction.md` if it doesn't exist yet:
 ```yaml
 ---
 up: ["[[index]]"]
@@ -186,34 +190,34 @@ Sections: `## Trayectoria`, `## Obras`, `## Aparece en` (wikilinks to source pag
 
 Create all pages:
 ```bash
-obsidian create path="Atlas/Wiki/Fiction/[Page].md" content="..." silent
+obsidian create path="{wiki_root}/Fiction/[Page].md" content="..." silent
 ```
 
-### 7. Update Atlas/Wiki/index.md
+### 7. Update {wiki_root}/{index}
 
 Add or update a `## Fiction` section listing `[[Fiction]]` with a one-line description. The Fiction.md MOC holds the detailed listing — index just points to it.
 
 ```bash
-obsidian read path="Atlas/Wiki/index.md"
-obsidian create path="Atlas/Wiki/index.md" content="..." overwrite silent
+obsidian read path="{wiki_root}/{index}"
+obsidian create path="{wiki_root}/{index}" content="..." overwrite silent
 ```
 
-### 8. Append to log.md
+### 8. Append to {log}
 
 ```bash
-obsidian prepend path="Atlas/Wiki/log.md" content="## [$(date +%Y-%m-%d)] ingest | [Título]\nPages created: [[Page A]], [[Page B]]\nPages updated: [[Page C]]\n\n"
+obsidian prepend path="{wiki_root}/{log}" content="## [$(date +%Y-%m-%d)] ingest | [Título]\nPages created: [[Page A]], [[Page B]]\nPages updated: [[Page C]]\n\n"
 ```
 
-### 9. Update hot.md
+### 9. Update {hot}
 
 Add this ingest to "Recent ingests". Update "Active threads" with the new fiction domain. Keep hot.md under ~500 words.
 
 ```bash
-obsidian read path="Atlas/Wiki/hot.md"
-obsidian create path="Atlas/Wiki/hot.md" content="..." overwrite silent
+obsidian read path="{wiki_root}/{hot}"
+obsidian create path="{wiki_root}/{hot}" content="..." overwrite silent
 ```
 
-### 10. Update +/raw/.manifest.json
+### 10. Update {manifest}
 
 Read the manifest, add entry for the JSON file, write back:
 
@@ -236,11 +240,11 @@ Use Write tool if Obsidian CLI can't handle `.json` files.
 ### 11. Delete raw file (with confirmation)
 
 Ask before deleting:
-> All pages created and manifest updated. Safe to delete `+/raw/[filename].json`?
+> All pages created and manifest updated. Safe to delete `{raw}/[filename].json`?
 
 If confirmed:
 ```bash
-rm ~/Code/mine/pkm/+/raw/[filename].json
+rm "<vaultRoot>/{raw}/[filename].json"
 ```
 
 ## Context discipline
