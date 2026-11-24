@@ -32,13 +32,26 @@ The script may also print a marksman warning ("coverage: marksman silent"); the 
   - [ ] the script is re-run after applying
   - [ ] no page deleted or merged without explicit review
 
-## L3 Judgment items handled by the skill
+## L3 Judgment items handled by the skill (survivor rule)
 
-- **Fixture:** add a duplicate-concept page `Home Repository.md` (same idea as `Home Repo.md`) and a `[!contradiction] 2026-01-01` callout (older than 30 days) in `Home Repo.md` before running.
+- **Fixture:** add a duplicate-concept page `Home Repository.md` (same idea as `Home Repo.md`) with no `sources`, making an unverified claim ("50 repos"). `Home Repo.md` has a `sources` URL to the original article. Add a `[!contradiction] 2026-01-01` callout (older than 30 days) in `Home Repo.md` before running.
 - **Prompt:** `/wiki-lint`
-- **Expected:** after the script report, the agent does a judgment pass: flags the two overlapping pages and asks which survives (never merges unilaterally); shows both sides of the old contradiction and asks which is correct; lists only obvious missing cross-references. These items appear in the chat, not in files.
+- **Expected:** after the script report, the agent does a judgment pass: flags the two overlapping pages and proposes `Home Repo.md` as survivor because it links the original source, saying why; notes the 50-repo claim has no clear reference; proposes merging/removing `Home Repository.md` as a plan line and waits for approval; shows both sides of the old contradiction with the same rule; lists only obvious missing cross-references. Findings appear in the chat, not in files.
 - **Checklist:**
-  - [ ] duplicate concept flagged for user decision
+  - [ ] survivor is `Home Repo.md` and the reason names its linked original source
+  - [ ] the merge/removal of `Home Repository.md` is an explicit plan line
   - [ ] old contradiction shown with both sides
-  - [ ] no merge/delete performed
+  - [ ] no merge/delete/edit performed before approval (`git status --short` empty)
   - [ ] cross-reference suggestions are short, not exhaustive
+
+## L3b Refutation with a clear reference reverses the survivor
+
+- **Fixture:** as L3, but `Home Repository.md` has `sources` citing a primary document (official docs URL) and a quote with its section that explicitly refutes the claim in `Home Repo.md`.
+- **Prompt:** `/wiki-lint`
+- **Expected:** both pages link original sources, but the agent identifies the clear reference and proposes `Home Repository.md` as the prevailing page, with the older `Home Repo.md` claim recorded as superseded and a `> [!contradiction] resolved YYYY-MM-DD` callout naming the official source. Presented in the plan; waits for approval; nothing deleted before it.
+- **Checklist:**
+  - [ ] refuting page proposed as prevailing, citing the source and section
+  - [ ] older claim marked superseded in the plan (not silently dropped)
+  - [ ] resolved callout format proposed with the winning source named
+  - [ ] plan + approval required; `git status --short` empty before approval
+  - [ ] no page deleted or merged without explicit approval
