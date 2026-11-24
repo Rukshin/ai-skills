@@ -35,7 +35,7 @@ Count the budget by approximating each file read with its size on disk (e.g. `wc
 
 ## Execution Steps
 
-1. **Resolve vault config** — run `node <skill-dir>/../../scripts/wiki-config.ts --start "$PWD"` (`<skill-dir>` is the directory containing this SKILL.md; the script is at `plugin/scripts/wiki-config.ts` from the plugin root). Read the JSON from stdout and use these keys: `wiki_root`, `index`, `hot`, `log`, `areas`, `language`. Paths are vault-relative to `vaultRoot`; `index`, `hot` and `log` are relative to `{wiki_root}`. On exit 1 or 2, stop and show stderr to the user — never guess a vault. If `node` is unavailable or older than 22.18, apply the same rules by hand: nearest `.wiki.json` walking up, else nearest `Atlas/Wiki/SCHEMA.md` with `type: llm-wiki`, else stop.
+1. **Resolve vault config** — run `node <skill-dir>/scripts/wiki-config.ts --start "$PWD"` (`<skill-dir>` is the directory containing this SKILL.md). Read the JSON from stdout and use these keys: `wiki_root`, `index`, `hot`, `log`, `areas`, `language`. Paths are vault-relative to `vaultRoot`; `index`, `hot` and `log` are relative to `{wiki_root}`. On exit 1 or 2, stop and show stderr to the user — never guess a vault. If `node` is unavailable or older than 22.18, apply the same rules by hand: nearest `.wiki.json` walking up, else nearest `Atlas/Wiki/SCHEMA.md` with `type: llm-wiki`, else stop.
 2. Read `{wiki_root}/{hot}` — check for recent ingests and active threads relevant to the question.
 3. Read `{wiki_root}/{index}` — use summaries to decide which pages are worth drilling into.
 4. *(Standard and Deep only)* Read the most relevant pages within the budget. For Deep, follow wikilinks one level if clearly relevant, and only after the user consents may you run a web search/fetch.
@@ -51,5 +51,5 @@ Count the budget by approximating each file read with its size on disk (e.g. `wc
 
 ## References
 
-- `../../_shared/cli-commands.md` — obsidian CLI read commands
+- `references/cli-commands.md` — obsidian CLI read commands
 - `../wiki-save/SKILL.md` — files an answer as a question page

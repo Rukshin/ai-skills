@@ -44,9 +44,9 @@ Areas share root `{index}`, `{hot}`, `{log}`; only page folders are per-area.
 
 ## Execution Steps
 
-1. **Resolve vault config** — run `node <skill-dir>/../../scripts/wiki-config.ts --start "$PWD"`; use its JSON keys. On exit 1 or 2 stop and show stderr. Details and fallback: [details](references/details.md).
+1. **Resolve vault config** — run `node <skill-dir>/scripts/wiki-config.ts --start "$PWD"`; use its JSON keys. On exit 1 or 2 stop and show stderr. Details and fallback: [details](references/details.md).
 2. **Detect area** — apply Decision Gates; set `target_dir`.
-3. **Orient + delta-check** — read `{wiki_root}/{hot}`; hash a local file with `node <skill-dir>/../../scripts/wiki-hash.ts <file>` and compare with `{manifest}`.
+3. **Orient + delta-check** — read `{wiki_root}/{hot}`; hash a local file with `node <skill-dir>/scripts/wiki-hash.ts <file>` and compare with `{manifest}`.
 4. **Read source** — file: Read tool. URL: list URLs, ask consent once, then try `fetchers` in order.
 5. **Discuss before writing** — share 3–5 takeaways, proposed pages and contradictions BEFORE the plan; `AskUserQuestion` only to confirm emphasis.
 6. **Plan and approve** — present ONE plan per [plan template](references/plan-template.md) and ask once. Write nothing until approved; revise on amendments.
@@ -65,5 +65,5 @@ Report:
 
 - `references/details.md` — long-form rules, hashing, config, fetch consent
 - `references/plan-template.md` — plan format
-- `../../_shared/cli-commands.md` — obsidian CLI, hash/manifest formats, callout syntax
+- `references/cli-commands.md` — obsidian CLI, hash/manifest formats, callout syntax
 - `{wiki_root}/SCHEMA.md` (vault) — naming, frontmatter, page structures, collisions

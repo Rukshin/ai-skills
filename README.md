@@ -50,8 +50,12 @@ ai-skills/
     │   └── cli-commands.md   ← shared Obsidian CLI reference for wiki skills
     └── skills/
         └── <skill-name>/
-            └── SKILL.md
+            └── SKILL.md      ← plus generated scripts/, lib/, references/cli-commands.md (see below)
 ```
+
+### Self-contained skills (installers)
+
+Installers such as `npx skills add` copy only the skill folder, so each skill carries its own copy of the scripts, libs and CLI reference it needs. `plugin/scripts`, `plugin/lib` and `plugin/_shared` stay the source of truth; after editing them run `node tools/vendor.mjs` (CI/`npm test` fails on drift, `node tools/vendor.mjs --check`). Skills call `node <skill-dir>/scripts/<name>.ts`. The personal skill is marked `metadata.internal: true` so installers hide it unless `INSTALL_INTERNAL_SKILLS=1`.
 
 ## Vault config (`.wiki.json`)
 

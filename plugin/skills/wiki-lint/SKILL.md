@@ -35,8 +35,8 @@ Load when the user invokes `/wiki-lint`, says "health check the wiki", "the wiki
 
 ## Execution Steps
 
-1. **Resolve vault config** — run `node <skill-dir>/../../scripts/wiki-config.ts --start "$PWD"` (`<skill-dir>` is the directory containing this SKILL.md). Use `wiki_root`, `raw`, `manifest`, `index`, `hot`, `log`. On exit 1 or 2, stop and show stderr. If `node` is missing or older than 22.18, resolve by hand: nearest `.wiki.json` walking up, else nearest `Atlas/Wiki/SCHEMA.md` with `type: llm-wiki`, else stop.
-2. **Run the lint** — `node <skill-dir>/../../scripts/wiki-lint.ts --start "$PWD"` (add `--exclude GLOB` for areas the user wants skipped). Read the JSON from stdout.
+1. **Resolve vault config** — run `node <skill-dir>/scripts/wiki-config.ts --start "$PWD"` (`<skill-dir>` is the directory containing this SKILL.md). Use `wiki_root`, `raw`, `manifest`, `index`, `hot`, `log`. On exit 1 or 2, stop and show stderr. If `node` is missing or older than 22.18, resolve by hand: nearest `.wiki.json` walking up, else nearest `Atlas/Wiki/SCHEMA.md` with `type: llm-wiki`, else stop.
+2. **Run the lint** — `node <skill-dir>/scripts/wiki-lint.ts --start "$PWD"` (add `--exclude GLOB` for areas the user wants skipped). Read the JSON from stdout.
 3. **Present the report in the chat** — summary counts per check, then the issues grouped by check with `path:line`. Write no file.
 4. **Judgment pass** — read the pages involved and look for duplicate concepts, missing cross-references and contradictions that need a decision. Add them to the findings.
 5. **Plan** — list every proposed fix as `file: change (why)`. Ask the user to approve, trim or reject it.
@@ -51,6 +51,6 @@ Load when the user invokes `/wiki-lint`, says "health check the wiki", "the wiki
 
 ## References
 
-- `../../scripts/wiki-lint.ts` — checks, report format and options (`--as-of`, `--exclude`, `--strict`, `--format`)
-- `../../_shared/cli-commands.md` — obsidian CLI syntax and manifest format
+- `scripts/wiki-lint.ts` — checks, report format and options (`--as-of`, `--exclude`, `--strict`, `--format`)
+- `references/cli-commands.md` — obsidian CLI syntax and manifest format
 - `{wiki_root}/SCHEMA.md` (vault) — naming conventions, frontmatter format, page types
