@@ -35,7 +35,7 @@ Load when the user invokes `/wiki-save`, or accepts the offer made by `wiki-quer
 
 ## Execution Steps
 
-1. **Resolve vault config** — run `node <skill-dir>/../../scripts/wiki-config.ts --start "$PWD"` (`<skill-dir>` is the directory containing this SKILL.md; the script is at `plugin/scripts/wiki-config.ts` from the plugin root). Read the JSON from stdout and use these keys: `wiki_root`, `index`, `hot`, `log`, `language`, `areas`. Paths are vault-relative to `vaultRoot`; `index`, `hot` and `log` are relative to `{wiki_root}`. On exit 1 or 2, stop and show stderr to the user — never guess a vault. If `node` is unavailable or older than 22.18, see `references/details.md`.
+1. **Resolve vault config** — run `node <skill-dir>/scripts/wiki-config.ts --start "$PWD"` (`<skill-dir>` is the directory containing this SKILL.md). Read the JSON from stdout and use these keys: `wiki_root`, `index`, `hot`, `log`, `language`, `areas`. Paths are vault-relative to `vaultRoot`; `index`, `hot` and `log` are relative to `{wiki_root}`. On exit 1 or 2, stop and show stderr to the user — never guess a vault. If `node` is unavailable or older than 22.18, see `references/details.md`.
 2. **Read SCHEMA** — read `{wiki_root}/SCHEMA.md` for the question page format, naming and collisions.
 3. **Draft** — build the question page from the question, the answer and the sources consulted, in the SCHEMA question format.
 4. **Plan and approve** — present ONE plan: the question page to create (path, one-line reason), an Update line for each consulted page (`sections: related (frontmatter)`, reason: "back-link so the question page is not an orphan"), the housekeeping updates (`{index}` Questions section, `{log}` entry, `{hot}`) and the sources cited. If a consulted page cannot be found, stop and report. Ask once. Write nothing until approved.
@@ -53,6 +53,6 @@ Load when the user invokes `/wiki-save`, or accepts the offer made by `wiki-quer
 ## References
 
 - `references/details.md` — back-link rules, manual config fallback
-- `../../_shared/cli-commands.md` — obsidian CLI commands and log entry formats
+- `references/cli-commands.md` — obsidian CLI commands and log entry formats
 - `../wiki-query/SKILL.md` — produces the answers filed here
 - `{wiki_root}/SCHEMA.md` (vault) — question page format, naming conventions, collisions

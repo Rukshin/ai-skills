@@ -5,6 +5,7 @@ license: MIT
 metadata:
   author: jordi.pulido
   version: "3.0.0"
+  internal: true
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 
