@@ -1,6 +1,6 @@
 ---
-up: ["[[index]]"]
-related: ["[[Incremental Knowledge Accumulation]]", "[[LLM Knowledge Bases (thread)]]", "[[LLM Wiki v2 (tweet)]]", "[[Memory Lifecycle]]", "[[Memory Tiers]]", "[[Knowledge Graph]]", "[[Hybrid Search]]"]
+up: ["index"]
+related: ["Incremental Knowledge Accumulation", "LLM Knowledge Bases (thread)", "LLM Wiki v2 (tweet)", "Memory Lifecycle", "Memory Tiers", "Knowledge Graph", "Hybrid Search"]
 created: 2026-04-13
 modified: 2026-04-14
 sources: ["https://x.com/karpathy/status/2039805659525644595"]
@@ -26,7 +26,7 @@ At ~100 articles / ~400K words, auto-maintained index files and brief summaries 
 
 ## Outputs
 
-Query outputs (markdown files, Marp slides, matplotlib images) are filed back into the wiki to enhance it for further queries. See [[Incremental Knowledge Accumulation]].
+Query outputs (markdown files, Marp slides, matplotlib images) are filed back into the wiki to enhance it for further queries. See Incremental Knowledge Accumulation.
 
 ## Linting
 
@@ -34,12 +34,12 @@ LLM health checks over the wiki: find inconsistent data, impute missing data via
 
 ## v2 extensions
 
-The original pattern treats all knowledge as equally valid forever. LLM Wiki v2 (see [[LLM Wiki v2 (tweet)]]) adds the machinery to keep the wiki healthy at scale:
+The original pattern treats all knowledge as equally valid forever. LLM Wiki v2 (see LLM Wiki v2 (tweet)) adds the machinery to keep the wiki healthy at scale:
 
-- **[[Memory Lifecycle]]** — confidence scoring, supersession, forgetting curves; knowledge that strengthens, weakens, and expires
-- **[[Memory Tiers]]** — 4-tier consolidation (working → episodic → semantic → procedural)
-- **[[Knowledge Graph]]** — typed entities and relationships layered on top of pages; graph traversal for queries
-- **[[Hybrid Search]]** — BM25 + vector + graph traversal, fused with reciprocal rank fusion; replaces `index.md` past ~200 pages
+- **Memory Lifecycle** — confidence scoring, supersession, forgetting curves; knowledge that strengthens, weakens, and expires
+- **Memory Tiers** — 4-tier consolidation (working → episodic → semantic → procedural)
+- **Knowledge Graph** — typed entities and relationships layered on top of pages; graph traversal for queries
+- **Hybrid Search** — BM25 + vector + graph traversal, fused with reciprocal rank fusion; replaces `index.md` past ~200 pages
 
 ## Source
-[[LLM Knowledge Bases (thread)]] by [[Andrej Karpathy]]
+LLM Knowledge Bases (thread) by Andrej Karpathy

@@ -1,5 +1,5 @@
 ---
-up: ["[[index]]"]
+up: ["index"]
 related: ["CAP Theorem", "Distributed Computing"]
 created: 2026-04-13
 modified: 2026-04-13
@@ -20,4 +20,4 @@ Published a 2015 paper "A Critique of the CAP Theorem" (arXiv:1509.05393) challe
 - **Formal vs practical mismatch**: CAP's theoretical model does not always map to real-world system behavior.
 
 ## Appearances in sources
-[[CAP Theorem Deep Dive (article)]]
+CAP Theorem Deep Dive (article)

@@ -1,6 +1,6 @@
 ---
-up: ["[[Linking Your Thinking (LYT)]]"]
-related: ["[[Relationship Builders for Notes (LYT)]]", "[[Maps of Content]]", "[[Home Note]]", "[[Higher-Order Notes]]", "[[ACE Folder Framework (LYT)]]"]
+up: ["Linking Your Thinking (LYT)"]
+related: ["Relationship Builders for Notes (LYT)", "Maps of Content", "Home Note", "Higher-Order Notes", "ACE Folder Framework (LYT)"]
 created: 2026-11-18
 modified: 2026-11-18
 sources: ["https://www.linkingyourthinking.com", "Ideaverse Lite kit: Fluid Frameworks; Fluid Taxonomies; Why Categories for Your Notes are a Good Idea; Benefits of LYT frameworks; LYT FAQ; LYT Glossary"]
@@ -9,7 +9,7 @@ tags: [wiki/concept]
 
 # Fluid Frameworks (LYT)
 
-According to [[Nick Milo]], fluid frameworks are non-rigid, highly flexible organizing structures you apply when needed. In LYT they are mainly [[Higher-Order Notes]] such as [[Maps of Content]] and the [[Home Note]], though a balanced mix of MOCs, folders, tags and queries can also stay fluid.
+According to Nick Milo, fluid frameworks are non-rigid, highly flexible organizing structures you apply when needed. In LYT they are mainly Higher-Order Notes such as Maps of Content and the Home Note, though a balanced mix of MOCs, folders, tags and queries can also stay fluid.
 
 ## Fluid versus rigid
 - A fluid framework is a non-essential supporting structure: remove the MOC and the notes remain.
@@ -27,4 +27,4 @@ Milo answers the claim that categories are bad:
 Milo borrows the idea from Steen Comer: taxonomies can be applied on and off in a loose system and are tools, not truths. A MOC is like a temporary hierarchy that members rearrange when it stops serving.
 
 ## Daily practice
-Milo says you rarely think about frameworks while writing: just make notes, maybe add a tag or a link. Build a map when the squeeze appears (see [[Mental Squeeze Point (LYT)]]).
+Milo says you rarely think about frameworks while writing: just make notes, maybe add a tag or a link. Build a map when the squeeze appears (see Mental Squeeze Point (LYT)).

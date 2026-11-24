@@ -1,6 +1,6 @@
 ---
 up: ["CAP Theorem"]
-related: ["[[PACELC]]", "Distributed Computing", "[[Martin Kleppmann]]"]
+related: ["PACELC", "Distributed Computing", "Martin Kleppmann"]
 created: 2026-04-13
 modified: 2026-04-13
 sources: ["https://medium.com/@shivanimutke2501/cap-theorem-a-deep-dive-into-cp-ap-ca-choices-in-distributed-systems-f19496a62d84"]
@@ -16,11 +16,11 @@ A deep-dive into CAP Theorem covering the CP/AP/CA classification with concrete 
 ## Key claims
 - Since network partitions are inevitable, every distributed system must choose between **CP** (consistency) or **AP** (availability) — CA is theoretical in distributed settings.
 - **PACELC** extends CAP: even when no partition occurs, systems face a trade-off between **Latency** and **Consistency**.
-- [[Martin Kleppmann]] argues CAP oversimplifies real-world systems and proposes **delay-sensitivity** as a more practical framework.
+- Martin Kleppmann argues CAP oversimplifies real-world systems and proposes **delay-sensitivity** as a more practical framework.
 - DynamoDB and other AP systems offer configurable consistency modes — the CP/AP binary is a spectrum in practice.
 
 ## Concepts introduced
-CAP Theorem, [[PACELC]]
+CAP Theorem, PACELC
 
 ## People mentioned
-[[Martin Kleppmann]]
+Martin Kleppmann

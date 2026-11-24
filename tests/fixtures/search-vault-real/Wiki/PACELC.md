@@ -24,4 +24,4 @@ CAP is a crisis model. PACELC is an operational model — it forces system desig
 Most production tuning decisions (read replicas, caching, eventual consistency policies) are PACELC decisions, not CAP decisions.
 
 ## Relation to CAP
-PACELC is a superset of CAP. All CAP trade-offs are preserved in the P branch; the E branch is new. See [[CAP Theorem Deep Dive (article)]].
+PACELC is a superset of CAP. All CAP trade-offs are preserved in the P branch; the E branch is new. See CAP Theorem Deep Dive (article).
