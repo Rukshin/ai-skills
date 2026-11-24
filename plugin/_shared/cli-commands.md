@@ -101,3 +101,11 @@ Pages created: [[Page A]], [[Page B]]
 Pages updated: [[Page C]]
 
 ```
+
+Query entries (written by `wiki-save`):
+
+```
+## [YYYY-MM-DD] query | [Question]
+Pages created: [[Question Page]]
+Sources: [[Page A]], [[Page B]]
+```
