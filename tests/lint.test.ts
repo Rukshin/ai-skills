@@ -94,7 +94,7 @@ test("report has the documented shape and all eight checks in order", () => {
       assert.equal(typeof i.path, "string");
     }
   }
-  assert.equal(r.summary.issues_found, 16);
+  assert.equal(r.summary.issues_found, 19);
 });
 
 // --- checks (exact issues) ---
@@ -102,6 +102,7 @@ test("report has the documented shape and all eight checks in order", () => {
 test("dead-links: dead and ambiguous targets; code, dot dirs and index entries do not count", () => {
   const r = lint();
   assert.deepEqual(brief(issuesOf(r, "dead-links")), [
+    "error Wiki/Hub.md:12 Dead link: [[Placeholder]]",
     "error Wiki/Linker.md:12 Dead link: [[Missing Page]]",
     "warning Wiki/Linker.md:13 Ambiguous link [[Twin]]: matches Wiki/Sub/Twin.md, Wiki/Twin.md",
   ]);
@@ -134,6 +135,8 @@ test("index-drift: unlisted pages and index entries pointing to missing pages", 
   const r = lint();
   assert.deepEqual(brief(issuesOf(r, "index-drift")), [
     "error Wiki/index.md:21 Index entry points to a missing page: [[Ghost Entry]]",
+    "warning Wiki/Lost Child.md Page is not listed in index.md",
+    "warning Wiki/Unlisted Hub.md Page is not listed in index.md",
     "warning Wiki/Unlisted.md Page is not listed in index.md",
   ]);
 });
@@ -196,20 +199,20 @@ test("linting never changes any file, mtime or directory in the vault", () => {
 // --- options ---
 
 test("--exclude globs drop matching files from every check (repeatable, path and basename globs)", () => {
-  const r = lint(["--exclude", "Wiki/Unlisted.md", "--exclude", "Stale.md", "--exclude", "raw/*.md"]);
+  const r = lint(["--exclude", "Wiki/Unlisted.md", "--exclude", "Wiki/Unlisted Hub.md", "--exclude", "Wiki/Lost Child.md", "--exclude", "Stale.md", "--exclude", "raw/*.md"]);
   assert.deepEqual(brief(issuesOf(r, "index-drift")), ["error Wiki/index.md:21 Index entry points to a missing page: [[Ghost Entry]]"]);
   assert.deepEqual(issuesOf(r, "stale-contradictions"), []);
   assert.deepEqual(brief(issuesOf(r, "manifest-drift")), [
     "warning raw/.manifest.json Page in pages_created no longer exists: Gone Page.md (source raw/changed-md5.md)",
   ]);
-  assert.equal(r.summary.issues_found, 11);
+  assert.equal(r.summary.issues_found, 12);
 });
 
 test("exit code: 0 with issues by default, 1 with --strict, 0 with --strict and no issues", () => {
   assert.equal(run(["--start", vault, "--as-of", AS_OF]).status, 0);
   const s = run(["--start", vault, "--as-of", AS_OF, "--strict"]);
   assert.equal(s.status, 1);
-  assert.equal(JSON.parse(s.stdout).summary.issues_found, 16);
+  assert.equal(JSON.parse(s.stdout).summary.issues_found, 19);
 
   const d = tmp();
   mkdirSync(join(d, "Atlas", "Wiki"), { recursive: true });
@@ -233,8 +236,8 @@ test("--format markdown prints a readable report, not JSON", () => {
   const r = run(["--start", vault, "--as-of", AS_OF, "--format", "markdown"]);
   assert.equal(r.status, 0, r.stderr);
   assert.match(r.stdout, /^# Wiki lint report/);
-  assert.match(r.stdout, /Issues found: 16/);
-  assert.match(r.stdout, /## Dead links \(2\)/);
+  assert.match(r.stdout, /Issues found: 19/);
+  assert.match(r.stdout, /## Dead links \(3\)/);
   assert.match(r.stdout, /- error `Wiki\/Linker\.md:12` Dead link: \[\[Missing Page\]\]/);
   assert.match(r.stdout, /## Empty sections \(2\)/);
   assert.throws(() => JSON.parse(r.stdout));

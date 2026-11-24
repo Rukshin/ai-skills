@@ -189,7 +189,9 @@ export function lintVault(resolved: Resolved, opts: LintOptions): Report {
   for (const p of pages) resolved_.set(p, p.links.map((link) => ({ link, targets: resolveLink(link.target) })));
 
   // 1. dead-links (index entries are reported by index-drift)
+  const schemaRel = posix.join(wikiRoot, "SCHEMA.md");
   for (const p of live) {
+    if (p.rel === schemaRel) continue; // SCHEMA documents placeholder links such as [[Source]]
     for (const { link, targets } of resolved_.get(p)!) {
       if (targets.length === 0) {
         if (p.rel === indexRel) continue;
@@ -311,7 +313,8 @@ export function lintVault(resolved: Resolved, opts: LintOptions): Report {
       for (const t of targets) listed.add(t);
     }
     for (const p of content) {
-      if (!listed.has(p.rel)) {
+      // A page also counts as indexed when its `up` target is listed (hub/MOC layout).
+      if (!listed.has(p.rel) && !upParents(p).some((t) => listed.has(t))) {
         push("index-drift", {
           path: p.rel,
           severity: "warning",

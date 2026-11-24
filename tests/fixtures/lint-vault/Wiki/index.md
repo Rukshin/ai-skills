@@ -19,3 +19,4 @@ created: 2026-01-01
 - [[Stale]] — old contradiction
 - [[Empty Sections]] — empty headings
 - [[Ghost Entry]] — page was deleted
+- [[Hub]] — listed hub
