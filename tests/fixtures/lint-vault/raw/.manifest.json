@@ -1,0 +1,54 @@
+{
+  "sources": {
+    "raw/tracked-md5.md": {
+      "hash": "2e8a52cabcce50a16f5d85d6e6a29f29",
+      "ingested_at": "2026-01-10",
+      "pages_created": [
+        "Clean A.md"
+      ],
+      "pages_updated": [
+        "index.md"
+      ]
+    },
+    "raw/changed-md5.md": {
+      "hash": "086e4669b7765d8a0a9c6b3b74597063",
+      "ingested_at": "2026-01-10",
+      "pages_created": [
+        "Gone Page.md",
+        "Sub/Twin.md"
+      ],
+      "pages_updated": []
+    },
+    "raw/tracked-sha.md": {
+      "hash": "11b6d6adfffd6377f78ce02bdf1f869fa2cf186679d7319cd364aaff0cf8874f",
+      "hash_algo": "sha256",
+      "ingested_at": "2026-01-10",
+      "status": "done",
+      "pages_created": [
+        "Clean B.md"
+      ],
+      "pages_updated": []
+    },
+    "raw/changed-sha.md": {
+      "hash": "2b548846189118a59f10c44eab7915b7e1f0bcff5f97d45669e4703288437b06",
+      "hash_algo": "sha256",
+      "ingested_at": "2026-01-10",
+      "status": "done",
+      "pages_created": [],
+      "pages_updated": []
+    },
+    "https://example.com/article": {
+      "hash": "00000000000000000000000000000000",
+      "url": "https://example.com/article",
+      "ingested_at": "2026-01-10",
+      "pages_created": [],
+      "pages_updated": []
+    },
+    "raw/removed-after-ingest.md": {
+      "hash": "11111111111111111111111111111111",
+      "ingested_at": "2026-01-10",
+      "pages_created": [],
+      "pages_updated": []
+    }
+  }
+}

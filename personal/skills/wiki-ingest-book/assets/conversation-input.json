@@ -1,0 +1,7 @@
+{
+  "metadata": { "title": "...", "dates": {}, "link": "https://chatgpt.com/..." },
+  "messages": [
+    { "role": "Prompt", "say": "...", "time": "..." },
+    { "role": "Response", "say": "...", "time": "..." }
+  ]
+}
