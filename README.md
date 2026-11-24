@@ -92,6 +92,10 @@ Run the tests:
 npm test        # same as: node --test
 ```
 
+## Testing
+
+`npm test` runs the script tests and the static skill checks (`tests/skills.test.ts`: frontmatter, section order, token budget, references). Skill behavior is evaluated by manual scenarios in `tests/scenarios/` (see its `README.md`), not by unit tests.
+
 ## Adding skills
 
 1. Create `skills/<skill-name>/SKILL.md` following the [LLM-first Skill Style Guide](docs/skill-style-guide.md)
