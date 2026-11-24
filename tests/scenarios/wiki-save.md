@@ -7,17 +7,19 @@ Run against `/tmp/pkm-scenario-run` (see `README.md`). Precondition: a wiki-quer
 - **Prompt:** `/wiki-save` (after Q1, or accepting the wiki-query offer)
 - **Expected:**
   - Agent runs `wiki-config.ts`, reads `SCHEMA.md` for the question format, drafts the page.
-  - Presents ONE plan: the question page (path, reason), housekeeping (index Questions entry, log entry, hot) and sources cited (`Home Repo#What goes where` as wikilinks inside the page). Asks once; writes nothing before approval.
-  - After approval: creates the question page in `Atlas/Wiki/` with full frontmatter (`up`, `sources`, `wiki/question` tag), no claims beyond the answer; adds the page under `## Questions` in `index.md`; prepends `## [YYYY-MM-DD] query | <question>` to `log.md`; updates `hot.md` (under ~500 words).
-  - Untouched: `+/raw/.manifest.json`, all other wiki pages.
+  - Presents ONE plan: the question page (path, reason), an Update for each consulted page (`Home Repo.md`, section `related`), housekeeping (index Questions entry, log entry, hot) and sources cited (`Home Repo#What goes where` as wikilinks inside the page). Asks once; writes nothing before approval.
+  - After approval: creates the question page in `Atlas/Wiki/` with full frontmatter (`up`, `sources`, `wiki/question` tag), no claims beyond the answer; adds the page under `## Questions` in `index.md`; prepends `## [YYYY-MM-DD] query | <question>` to `log.md`; updates `hot.md` (under ~500 words). The new page appears in `related` of `Home Repo.md`; the diff of that file shows only that frontmatter line changed.
+  - Untouched: `+/raw/.manifest.json`, all other wiki pages (except the `related` back-link in consulted pages).
 - **Checklist:**
   - [ ] no write before approval
   - [ ] question page exists with correct frontmatter and wikilink citations
+  - [ ] plan lists an Update for `Home Repo.md` (`related`)
+  - [ ] `Home Repo.md` diff shows only the `related` frontmatter line changed, now including the question page
   - [ ] index, log, hot updated in that order
   - [ ] log entry matches `## [YYYY-MM-DD] query | ...`
   - [ ] manifest untouched
-  - [ ] final report: wikilink, confirmations, sources cited
-  - [ ] re-running `wiki-lint.ts` shows no new issues and the `## Questions` empty-section issue is gone
+  - [ ] final report: wikilink, updated consulted pages, confirmations, sources cited
+  - [ ] re-running `wiki-lint.ts` shows NO new orphan and the `## Questions` empty-section issue is gone; summary stays at the 5 pre-existing issues (2 dead-links, 1 frontmatter-gaps, 2 up-chain)
 
 ## S2 Declined or unsupported
 
