@@ -6,7 +6,7 @@ Copy `wiki.json` to the vault root as `.wiki.json` and edit. Every key is option
 |-----|---------|---------|
 | `wiki_root` | `Atlas/Wiki` | Folder holding the compiled wiki pages (and `SCHEMA.md`). |
 | `raw` | `+/raw` | Folder where unprocessed sources are dropped. |
-| `manifest` | `+/raw/.manifest.json` | Ingest manifest (source path/URL → hash, pages). |
+| `manifest` | `{raw}/.manifest.json` | Ingest manifest (source path/URL → hash, pages). Follows `raw` unless set explicitly. |
 | `attachments` | `x/Images` | Folder for images and other attachments moved out of `raw`. |
 | `index` | `index.md` | Wiki index page, relative to `wiki_root`. |
 | `hot` | `hot.md` | Hot cache of recent context, relative to `wiki_root`. |

@@ -112,8 +112,29 @@ test(".wiki.json missing keys take defaults; given keys override", () => {
   assert.equal(r.config.raw, "inbox");
   assert.equal(r.config.language, "es");
   assert.deepEqual(r.config.areas, ["Work"]);
-  assert.equal(r.config.manifest, DEFAULTS.manifest);
   assert.deepEqual(r.config.fetchers, DEFAULTS.fetchers);
+});
+
+test("manifest defaults to {raw}/.manifest.json and follows a custom raw", () => {
+  const r = resolveVault(fx("json-vault"));
+  assert.equal(r.config.raw, "inbox");
+  assert.equal(r.config.manifest, "inbox/.manifest.json");
+  const d = tmp();
+  writeFileSync(join(d, ".wiki.json"), "{}");
+  assert.equal(resolveVault(d).config.manifest, "+/raw/.manifest.json");
+});
+
+test("an explicit manifest wins over the raw-derived default", () => {
+  const d = tmp();
+  writeFileSync(join(d, ".wiki.json"), '{"raw":"inbox","manifest":"meta/m.json"}');
+  assert.equal(resolveVault(d).config.manifest, "meta/m.json");
+});
+
+test("SCHEMA fallback derives the manifest from raw", () => {
+  const d = tmp();
+  mkdirSync(join(d, "Atlas", "Wiki"), { recursive: true });
+  writeFileSync(join(d, "Atlas", "Wiki", "SCHEMA.md"), "---\ntype: llm-wiki\nraw: drop\n---\n");
+  assert.equal(resolveVault(d).config.manifest, "drop/.manifest.json");
 });
 
 // --- Validation ---

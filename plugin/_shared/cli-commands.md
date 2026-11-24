@@ -47,11 +47,8 @@ obsidian property:set name="modified" value="YYYY-MM-DD" path="{wiki_root}/[Page
 obsidian read path="{manifest}"
 # or use Read tool if CLI can't handle .json
 
-# Hash a local file
-md5 -q "/path/to/file.md"
-
-# Hash a local directory (all .md files)
-find "<dir>" -name "*.md" | sort | while read f; do md5 -q "$f"; done | md5 -q
+# Hash a local file (prints sha256:<hex>; --algo md5 for legacy entries)
+node <skill-dir>/../../scripts/wiki-hash.ts "/path/to/file.md"
 ```
 
 ## Cleanup
@@ -73,19 +70,28 @@ mv "<vaultRoot>/{raw}/[image-file]" "<vaultRoot>/{attachments}/"
 
 ## Manifest entry format
 
+`{manifest}` (default `{raw}/.manifest.json`) maps each source to its ingest record. Keys are the vault-relative path of the raw file or the source URL.
+
 ```json
 {
   "sources": {
-    "<local_path_or_url>": {
-      "hash": "<md5>",
+    "<vault-relative path or url>": {
+      "hash": "<hex digest>",
+      "hash_algo": "sha256",
       "url": "<original URL if applicable>",
       "ingested_at": "YYYY-MM-DD",
+      "status": "done",
       "pages_created": ["Page A.md"],
       "pages_updated": ["index.md"]
     }
   }
 }
 ```
+
+- `hash_algo` is `sha256` or `md5`. New entries always use `sha256` (`wiki-hash.ts <file>` prints `sha256:<hex>`; store the hex part).
+- Legacy entries have no `hash_algo`: they are md5. Compare them with `wiki-hash.ts --algo md5 <file>`. They migrate to sha256 when their source is re-ingested; there is no bulk rewrite.
+- `pages_created` / `pages_updated` are relative to `{wiki_root}`.
+- Library: `plugin/lib/manifest.ts` (`readManifest`, `hashFile`, `compareEntry`).
 
 ## Log entry format
 

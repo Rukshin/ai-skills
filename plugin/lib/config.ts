@@ -176,6 +176,7 @@ export function buildConfig(
   lists.areas = [...DEFAULTS.areas];
   lists.fetchers = [...DEFAULTS.fetchers];
   const known = Object.keys(DEFAULTS);
+  let manifestGiven = false;
 
   for (const key of Object.keys(given)) {
     if (allowedKeys && !allowedKeys.includes(key)) continue;
@@ -186,13 +187,18 @@ export function buildConfig(
     const v = given[key];
     if (STRING_KEYS.includes(key)) {
       if (typeof v !== "string") errors.push(`"${key}" must be a string`);
-      else strings[key] = v;
+      else {
+        strings[key] = v;
+        if (key === "manifest") manifestGiven = true;
+      }
     } else if (LIST_KEYS.includes(key)) {
       if (!isStringList(v)) errors.push(`"${key}" must be an array of strings`);
       else lists[key] = [...v];
     }
   }
   if (errors.length) throw new ConfigError(`Invalid wiki config in ${vaultRoot}:\n- ${errors.join("\n- ")}`);
+  // The manifest lives next to the raw sources unless set explicitly.
+  if (!manifestGiven) strings.manifest = `${strings.raw.replace(/\/+$/, "")}/.manifest.json`;
   const config: WikiConfig = {
     wiki_root: strings.wiki_root,
     raw: strings.raw,
