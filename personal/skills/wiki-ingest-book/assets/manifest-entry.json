@@ -1,0 +1,13 @@
+{
+  "sources": {
+    "<path/to/file.json>": {
+      "hash": "<sha256 hex of file>",
+      "hash_algo": "sha256",
+      "url": "<chatgpt conversation link>",
+      "ingested_at": "YYYY-MM-DD",
+      "status": "ingested",
+      "pages_created": ["Fiction/Amanecer Rojo (novela).md", "..."],
+      "pages_updated": ["index.md"]
+    }
+  }
+}

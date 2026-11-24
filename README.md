@@ -9,6 +9,20 @@ claude plugin marketplace add github:Rukshin/ai-skills
 claude plugin install ai-skills@ai-skills
 ```
 
+## Plugins
+
+The marketplace ships two plugins:
+
+| Plugin | Source | Contents |
+|--------|--------|----------|
+| `ai-skills` | `plugin/` | Portable wiki skills (`wiki-ingest`, `wiki-query`, `wiki-lint`, ...) for any vault with a `.wiki.json` |
+| `ai-skills-personal` | `personal/` | Owner-only skills for the personal pkm vault (`wiki-ingest-book`); it refuses to run in a vault without a `Fiction` area |
+
+```bash
+claude plugin install ai-skills@ai-skills
+claude plugin install ai-skills-personal@ai-skills
+```
+
 ## Skills
 
 | Skill | Description |
@@ -16,7 +30,7 @@ claude plugin install ai-skills@ai-skills
 | `wiki-ingest` | Compiles a raw source (file or URL) into the LLM Wiki at `Atlas/Wiki/` |
 | `wiki-query` | Answers questions from compiled LLM Wiki pages with citations |
 | `wiki-lint` | Health-checks the LLM Wiki — finds orphans, dead links, contradictions, and drift |
-| `wiki-ingest-book` | Ingests a ChatGPT Exporter JSON book conversation into the PKM vault |
+| `wiki-ingest-book` | (personal plugin) Ingests a ChatGPT Exporter JSON book conversation into the personal PKM vault |
 
 ## Structure
 
@@ -25,6 +39,7 @@ ai-skills/
 ├── .claude-plugin/
 │   └── marketplace.json
 ├── tests/                ← node:test suite and fixtures
+├── personal/             ← second plugin (owner-only): .claude-plugin/plugin.json, skills/wiki-ingest-book/
 └── plugin/
     ├── .claude-plugin/
     │   └── plugin.json

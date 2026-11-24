@@ -16,6 +16,17 @@
       "source": "./plugin",
       "category": "productivity",
       "homepage": "https://github.com/Rukshin/ai-skills"
+    },
+    {
+      "name": "ai-skills-personal",
+      "description": "Personal skills for the owner's personal pkm vault. Not intended for other vaults.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Jordi Pulido"
+      },
+      "source": "./personal",
+      "category": "productivity",
+      "homepage": "https://github.com/Rukshin/ai-skills"
     }
   ]
 }
