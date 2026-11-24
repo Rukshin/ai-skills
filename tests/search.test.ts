@@ -8,24 +8,47 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const script = join(root, "plugin", "scripts", "wiki-search.ts");
 const vault = join(root, "tests", "fixtures", "search-vault");
+const vaultReal = join(root, "tests", "fixtures", "search-vault-real");
 
-interface Hit { page: string; heading: string | null; area: string | null; score: number; snippet: string }
-function search(args: string[]): { status: number | null; out: { results: Hit[] } | undefined; stderr: string } {
-  const r = spawnSync("node", [script, "--start", vault, ...args], { encoding: "utf8" });
+interface Hit { page: string; heading: string | null; area: string | null; score: number; coverage: number; snippet: string }
+interface Out { results: Hit[]; unmatched_terms: string[]; confidence: "high" | "low" | "none" }
+function search(args: string[], v = vault): { status: number | null; out: Out | undefined; stderr: string } {
+  const r = spawnSync("node", [script, "--start", v, ...args], { encoding: "utf8" });
   return { status: r.status, out: r.status === 0 ? JSON.parse(r.stdout) : undefined, stderr: r.stderr };
 }
+function table(v: string, file: string): string[][] {
+  return readFileSync(join(v, file), "utf8").split("\n").filter((l) => l.trim()).map((l) => l.split("\t"));
+}
 
-// Retrieval regression: queries.tsv rows are "query<TAB>expected page"; expected page must be in the top 3.
-const rows = readFileSync(join(vault, "queries.tsv"), "utf8").split("\n").filter((l) => l.trim());
-for (const row of rows) {
-  const [query, expected] = row.split("\t");
-  test(`retrieval top-3: ${query}`, () => {
-    const r = search(["--query", query, "--top", "3"]);
+// Retrieval regression. queries.tsv rows: query, expected page (a|b = either), rank limit (default 3), page that must NOT rank first (optional).
+for (const v of [vault, vaultReal]) {
+  const name = v === vault ? "fixture" : "real";
+  for (const [query, expected, limit = "3", decoy = ""] of table(v, "queries.tsv")) {
+    test(`retrieval ${name} top-${limit}: ${query} -> ${expected}`, () => {
+      const r = search(["--query", query, "--top", "5"], v);
+      assert.equal(r.status, 0, r.stderr);
+      const pages = r.out!.results.map((h) => h.page);
+      const want = expected.split("|");
+      assert.ok(pages.slice(0, Number(limit)).some((p) => want.includes(p)), `expected ${expected} in top ${limit} of ${JSON.stringify(pages)}`);
+      if (decoy) assert.notEqual(pages[0], decoy, `decoy ${decoy} ranked first`);
+    });
+  }
+}
+
+// Gap detection. gaps.tsv rows: query, unmatched terms (comma list, may be empty), confidence.
+for (const [query, unmatched, confidence] of table(vaultReal, "gaps.tsv")) {
+  test(`gap signal: ${query} -> ${confidence}`, () => {
+    const r = search(["--query", query], vaultReal);
     assert.equal(r.status, 0, r.stderr);
-    const pages = r.out!.results.map((h) => h.page);
-    assert.ok(pages.includes(expected), `expected ${expected} in ${JSON.stringify(pages)}`);
+    assert.deepEqual(r.out!.unmatched_terms, unmatched === "" ? [] : unmatched.split(","));
+    assert.equal(r.out!.confidence, confidence);
+    if (confidence === "none") assert.deepEqual(r.out!.results, []);
   });
 }
+
+test("results carry coverage in [0,1]", () => {
+  for (const h of search(["--query", "optimistic locking"]).out!.results) assert.ok(h.coverage > 0 && h.coverage <= 1);
+});
 
 test("results are ranked, bounded and carry heading, area and snippet", () => {
   const r = search(["--query", "optimistic locking retry", "--top", "5"]);

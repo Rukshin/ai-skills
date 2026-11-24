@@ -90,7 +90,7 @@ node plugin/scripts/wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude G
 node plugin/scripts/wiki-search.ts --query TEXT [--top N] [--area NAME|root] [--start DIR]   # ranked read-only search, JSON on stdout; exit 0 ok, 1 vault error, 2 bad usage
 ```
 
-`wiki-search` ranks page sections (BM25 over title, aliases/tags, headings, body) so `wiki-query` can pick pages; results are candidates, not evidence.
+`wiki-search` ranks page sections (BM25 over title, aliases/tags, headings, body) so `wiki-query` can pick pages; results are candidates, not evidence. The JSON also has `unmatched_terms` (query terms found nowhere in the wiki) and `confidence` (`high|low|none`) so the skill can state a gap; each result has `coverage` (share of query terms present in the page). Retrieval tests: `tests/fixtures/search-vault` and `search-vault-real` (trimmed real pages, with decoys and gap queries).
 
 ```sh
 node plugin/scripts/wiki-hash.ts [--algo sha256|md5] <file>   # prints sha256:<hex>; exit 1 unreadable file, 2 bad usage

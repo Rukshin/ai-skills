@@ -44,9 +44,9 @@ function main(argv: string[]): number {
       process.stderr.write(`unknown area "${area}"; known: root, ${resolved.config.areas.join(", ")}\n`);
       return 2;
     }
-    const results = searchVault(resolved, { query, top, area });
+    const found = searchVault(resolved, { query, top, area });
     process.stdout.write(
-      `${JSON.stringify({ vaultRoot: resolved.vaultRoot, wiki_root: resolved.config.wiki_root, query, results }, null, 2)}\n`,
+      `${JSON.stringify({ vaultRoot: resolved.vaultRoot, wiki_root: resolved.config.wiki_root, query, ...found }, null, 2)}\n`,
     );
     return 0;
   } catch (e) {
