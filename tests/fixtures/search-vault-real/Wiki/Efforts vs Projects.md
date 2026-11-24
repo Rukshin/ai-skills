@@ -1,6 +1,6 @@
 ---
-up: ["[[Linking Your Thinking (LYT)]]"]
-related: ["[[ACE Folder Framework (LYT)]]", "[[Maps of Content]]", "[[Note-Making]]"]
+up: ["Linking Your Thinking (LYT)"]
+related: ["ACE Folder Framework (LYT)", "Maps of Content", "Note-Making"]
 created: 2026-11-18
 modified: 2026-11-18
 sources: ["https://www.linkingyourthinking.com", "Ideaverse Lite kit: The big differences between efforts and projects; How ideas and efforts play nicely together; Why Efforts are Liberating; The Four Intensities of Efforts; Efforts"]
@@ -9,7 +9,7 @@ tags: [wiki/concept]
 
 # Efforts vs Projects
 
-[[Nick Milo]] replaced "projects" with "efforts" in the Efforts folder of the [[ACE Folder Framework (LYT)]]. Introduced in LYT Kit 7 (2022), the concept pairs with a way of viewing efforts by intensity.
+Nick Milo replaced "projects" with "efforts" in the Efforts folder of the ACE Folder Framework (LYT). Introduced in LYT Kit 7 (2022), the concept pairs with a way of viewing efforts by intensity.
 
 ## Definitions
 - A **project** is a sequence of tasks to complete within a defined timeline for a specific outcome; it is rigid and top-down.

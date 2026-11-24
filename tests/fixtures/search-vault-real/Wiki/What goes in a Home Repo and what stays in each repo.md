@@ -1,6 +1,6 @@
 ---
-up: ["[[index]]"]
-related: ["[[Home Repo]]"]
+up: ["index"]
+related: ["Home Repo"]
 created: 2026-11-24
 modified: 2026-11-24
 sources: ["https://www.aihero.dev/the-home-repo-pattern"]
@@ -17,4 +17,4 @@ Date: 2026-11-24
 - Pointers: one line per repo (name, what it is, local path, where to clone); past about 20 repos they are grouped by area.
 
 ## Sources consulted
-[[Home Repo#What goes where]], [[Home Repo#Pointers]]
+Home Repo, Home Repo

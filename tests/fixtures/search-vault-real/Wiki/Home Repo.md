@@ -1,6 +1,6 @@
 ---
-up: ["[[index]]"]
-related: ["[[Progressive Disclosure]]", "[[Grilling]]", "[[Matt Pocock]]", "[[The Home Repo Pattern (article)]]", "[[What goes in a Home Repo and what stays in each repo]]"]
+up: ["index"]
+related: ["Progressive Disclosure", "Grilling", "Matt Pocock", "The Home Repo Pattern (article)", "What goes in a Home Repo and what stays in each repo"]
 created: 2026-11-24
 modified: 2026-11-24
 sources: ["https://www.aihero.dev/the-home-repo-pattern"]
@@ -20,7 +20,7 @@ A Home Repo is one git repository that holds your shared skills, your `AGENTS.md
 
 ## Pointers
 
-Each repo gets one line in an "Other Repos" section: name, what it is, local path, and where to clone it if missing. The agent works in the repo if it is already on disk and clones it there if not. Past about 20 repos, the pointers are grouped by area (see [[Progressive Disclosure]]).
+Each repo gets one line in an "Other Repos" section: name, what it is, local path, and where to clone it if missing. The agent works in the repo if it is already on disk and clones it there if not. Past about 20 repos, the pointers are grouped by area (see Progressive Disclosure).
 
 ## Alternatives
 
@@ -30,6 +30,6 @@ Each repo gets one line in an "Other Repos" section: name, what it is, local pat
 
 ## Contradictions
 > [!contradiction] resolved 2026-11-24
-> Kept "about 20 repos" from [[The Home Repo Pattern (article)]] (original source). The "about 50" claim from an unverified web source came with no clear reference refuting it, so it is not recorded.
+> Kept "about 20 repos" from The Home Repo Pattern (article) (original source). The "about 50" claim from an unverified web source came with no clear reference refuting it, so it is not recorded.
 
-Source: [[The Home Repo Pattern (article)]]
+Source: The Home Repo Pattern (article)

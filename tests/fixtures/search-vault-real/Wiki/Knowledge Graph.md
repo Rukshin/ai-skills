@@ -1,6 +1,6 @@
 ---
-up: ["[[index]]"]
-related: ["[[LLM Wiki Pattern]]", "[[Hybrid Search]]", "[[LLM Wiki v2 (tweet)]]", "[[LLM Wiki v2 (gist)]]"]
+up: ["index"]
+related: ["LLM Wiki Pattern", "Hybrid Search", "LLM Wiki v2 (tweet)", "LLM Wiki v2 (gist)"]
 created: 2026-04-14
 modified: 2026-04-14
 sources: ["https://x.com/heynavtoor/status/2043321909971202403", "https://gist.github.com/rohitg00/2067ab416f7bbe447c1977edaaa681e2"]
@@ -9,7 +9,7 @@ tags: [wiki/concept]
 
 # Knowledge Graph
 
-A typed entity + relationship layer built on top of wiki pages. Augments the flat-page [[LLM Wiki Pattern]] with structured navigation and discovery. Introduced in LLM Wiki v2.
+A typed entity + relationship layer built on top of wiki pages. Augments the flat-page LLM Wiki Pattern with structured navigation and discovery. Introduced in LLM Wiki v2.
 
 ## What it adds over wikilinks
 
@@ -50,4 +50,4 @@ The graph doesn't replace pages — it augments them.
 Before any entity hits the wiki, strip sensitive data — API keys, credentials, PII. Entity extraction is a write-time operation; filtering must happen here.
 
 ## Source
-[[LLM Wiki v2 (tweet)]], [[LLM Wiki v2 (gist)]]
+LLM Wiki v2 (tweet), LLM Wiki v2 (gist)

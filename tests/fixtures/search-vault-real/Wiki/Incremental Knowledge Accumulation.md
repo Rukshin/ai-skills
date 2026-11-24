@@ -1,6 +1,6 @@
 ---
-up: ["[[LLM Wiki Pattern]]"]
-related: ["[[LLM Wiki Pattern]]", "[[LLM Knowledge Bases (thread)]]"]
+up: ["LLM Wiki Pattern"]
+related: ["LLM Wiki Pattern", "LLM Knowledge Bases (thread)"]
 created: 2026-04-13
 modified: 2026-04-13
 sources: ["https://x.com/karpathy/status/2039805659525644595"]
@@ -12,7 +12,7 @@ The principle that every query, output, and exploration should be filed back int
 
 ## Core idea
 
-In the [[LLM Wiki Pattern]], outputs are not discarded after a query. Markdown answers, slide decks, and visualizations are "filed back" into the wiki, making the knowledge base richer for future queries. Each exploration adds up.
+In the LLM Wiki Pattern, outputs are not discarded after a query. Markdown answers, slide decks, and visualizations are "filed back" into the wiki, making the knowledge base richer for future queries. Each exploration adds up.
 
 Karpathy: "Often, I end up 'filing' the outputs back into the wiki to enhance it for further queries. So my own explorations and queries always 'add up' in the knowledge base."
 
@@ -27,4 +27,4 @@ Karpathy: "Often, I end up 'filing' the outputs back into the wiki to enhance it
 When the wiki grows large enough, synthetic data generation and finetuning can encode the accumulated knowledge into model weights directly, removing the context-window dependency entirely.
 
 ## Source
-[[LLM Knowledge Bases (thread)]] by [[Andrej Karpathy]]
+LLM Knowledge Bases (thread) by Andrej Karpathy

@@ -1,6 +1,6 @@
 ---
-up: ["[[index]]"]
-related: ["[[LLM Wiki Pattern]]", "[[Memory Lifecycle]]", "[[Incremental Knowledge Accumulation]]", "[[LLM Wiki v2 (tweet)]]", "[[LLM Wiki v2 (gist)]]"]
+up: ["index"]
+related: ["LLM Wiki Pattern", "Memory Lifecycle", "Incremental Knowledge Accumulation", "LLM Wiki v2 (tweet)", "LLM Wiki v2 (gist)"]
 created: 2026-04-14
 modified: 2026-04-14
 sources: ["https://x.com/heynavtoor/status/2043321909971202403", "https://gist.github.com/rohitg00/2067ab416f7bbe447c1977edaaa681e2"]
@@ -9,7 +9,7 @@ tags: [wiki/concept]
 
 # Memory Tiers
 
-A 4-tier consolidation pipeline for LLM Wiki knowledge, extending [[Incremental Knowledge Accumulation]]. Each tier is more compressed, more confident, and longer-lived than the one below it. Introduced in LLM Wiki v2.
+A 4-tier consolidation pipeline for LLM Wiki knowledge, extending Incremental Knowledge Accumulation. Each tier is more compressed, more confident, and longer-lived than the one below it. Introduced in LLM Wiki v2.
 
 ## The four tiers
 
@@ -31,7 +31,7 @@ This is how you go from "I saw this once" to "this is how things work."
 
 ## When to add tiers
 
-In the implementation spectrum of the [[LLM Wiki Pattern]], tiers belong in the second stage (after a minimal viable wiki is working). Start with raw sources + wiki pages + index.md. Add lifecycle and tiers once the wiki starts feeling like a junk drawer of equally-weighted facts.
+In the implementation spectrum of the LLM Wiki Pattern, tiers belong in the second stage (after a minimal viable wiki is working). Start with raw sources + wiki pages + index.md. Add lifecycle and tiers once the wiki starts feeling like a junk drawer of equally-weighted facts.
 
 ## Relation to engram
 
@@ -42,4 +42,4 @@ The engram memory system (used in this vault) implements a similar tier structur
 Procedural memory maps to skills and CLAUDE.md conventions.
 
 ## Source
-[[LLM Wiki v2 (tweet)]], [[LLM Wiki v2 (gist)]]
+LLM Wiki v2 (tweet), LLM Wiki v2 (gist)

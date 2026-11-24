@@ -1,6 +1,6 @@
 ---
-up: ["[[index]]"]
-related: ["[[LLM Wiki Pattern]]", "[[Knowledge Graph]]", "[[LLM Wiki v2 (tweet)]]", "[[LLM Wiki v2 (gist)]]"]
+up: ["index"]
+related: ["LLM Wiki Pattern", "Knowledge Graph", "LLM Wiki v2 (tweet)", "LLM Wiki v2 (gist)"]
 created: 2026-04-14
 modified: 2026-04-14
 sources: ["https://x.com/heynavtoor/status/2043321909971202403", "https://gist.github.com/rohitg00/2067ab416f7bbe447c1977edaaa681e2"]
@@ -17,13 +17,13 @@ A multi-stream search approach combining BM25, vector embeddings, and graph trav
 |---|---|
 | **BM25** | Exact keyword matches (stemming + synonym expansion) |
 | **Vector search** | Semantic similarity via embeddings |
-| **Graph traversal** | Structural connections via the [[Knowledge Graph]] |
+| **Graph traversal** | Structural connections via the Knowledge Graph |
 
 Each stream catches things the others miss. Results are fused using **reciprocal rank fusion**.
 
 ## Why index.md breaks at scale
 
-The [[LLM Wiki Pattern]]'s index.md works up to ~100–200 pages. Beyond that, the index itself becomes too long for the LLM to read in one pass.
+The LLM Wiki Pattern's index.md works up to ~100–200 pages. Beyond that, the index itself becomes too long for the LLM to read in one pass.
 
 Hybrid search replaces it as the LLM's primary mechanism. index.md is still maintained — but as a human-readable catalog, not a search tool. The dual role:
 - **index.md** → for humans browsing the wiki
@@ -35,7 +35,7 @@ A technique to combine ranked results from multiple streams into a single unifie
 
 ## Implementation note
 
-Hybrid search belongs in the "add scale" tier of the [[LLM Wiki Pattern]] implementation spectrum — necessary when the wiki grows past a few hundred pages. Start with index.md; switch to hybrid when queries start missing relevant content.
+Hybrid search belongs in the "add scale" tier of the LLM Wiki Pattern implementation spectrum — necessary when the wiki grows past a few hundred pages. Start with index.md; switch to hybrid when queries start missing relevant content.
 
 ## Source
-[[LLM Wiki v2 (tweet)]], [[LLM Wiki v2 (gist)]]
+LLM Wiki v2 (tweet), LLM Wiki v2 (gist)

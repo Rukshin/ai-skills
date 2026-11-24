@@ -1,6 +1,6 @@
 ---
-up: ["[[Linking Your Thinking (LYT)]]"]
-related: ["[[Note-Making]]", "[[Maps of Content]]", "[[Incremental Knowledge Accumulation]]"]
+up: ["Linking Your Thinking (LYT)"]
+related: ["Note-Making", "Maps of Content", "Incremental Knowledge Accumulation"]
 created: 2026-11-18
 modified: 2026-11-18
 sources: ["https://www.linkingyourthinking.com", "Ideaverse Lite kit: Evergreen notes; Evergreen notes are things or statements about things; Evergreen notes are antifragile; Evergreen notes compound in value over time; Evergreen notes maximize reusability; Guiding assumptions for linked notes; LYT Glossary"]
@@ -9,7 +9,7 @@ tags: [wiki/concept]
 
 # Evergreen Notes (LYT)
 
-Evergreen notes are notes written to grow in value. [[Nick Milo]] credits the term to Andy Matuschak, as a digital evolution of the atomic notes of Niklas Luhmann. They are the output of [[Note-Making]].
+Evergreen notes are notes written to grow in value. Nick Milo credits the term to Andy Matuschak, as a digital evolution of the atomic notes of Niklas Luhmann. They are the output of Note-Making.
 
 ## Properties
 According to Milo, evergreen notes are:
@@ -23,7 +23,7 @@ Milo separates "things" (concepts, known facts, standards, definitions, people, 
 
 ## Why they pay off
 - **Antifragile**: each link, even to a contradicting idea, adds perspective, so the note gains from stress.
-- **Compounding**: value builds over time, like interest (see [[Incremental Knowledge Accumulation]] for a related idea in this wiki).
+- **Compounding**: value builds over time, like interest (see Incremental Knowledge Accumulation for a related idea in this wiki).
 - **Reusable**: the same note can serve several efforts across years, though it costs more to write than an ordinary note.
 
 ## Not dogmatic
