@@ -12,7 +12,7 @@ const plugin = join(root, "plugin");
 export const SKILL_SCRIPTS = {
   "wiki-ingest": ["wiki-config.ts", "wiki-hash.ts"],
   "wiki-lint": ["wiki-config.ts", "wiki-lint.ts"],
-  "wiki-query": ["wiki-config.ts"],
+  "wiki-query": ["wiki-config.ts", "wiki-search.ts"],
   "wiki-save": ["wiki-config.ts"],
 };
 const REFERENCE = ["_shared/cli-commands.md", "references/cli-commands.md"];
