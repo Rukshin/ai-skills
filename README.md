@@ -87,6 +87,12 @@ node plugin/scripts/wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude G
 `wiki-hash` prints a file's hash for the ingest manifest. New manifest entries use sha256; entries without `hash_algo` are legacy md5 (format: `plugin/_shared/cli-commands.md`).
 
 ```bash
+node plugin/scripts/wiki-search.ts --query TEXT [--top N] [--area NAME|root] [--start DIR]   # ranked read-only search, JSON on stdout; exit 0 ok, 1 vault error, 2 bad usage
+```
+
+`wiki-search` ranks page sections (BM25 over title, aliases/tags, headings, body) so `wiki-query` can pick pages; results are candidates, not evidence.
+
+```sh
 node plugin/scripts/wiki-hash.ts [--algo sha256|md5] <file>   # prints sha256:<hex>; exit 1 unreadable file, 2 bad usage
 ```
 
