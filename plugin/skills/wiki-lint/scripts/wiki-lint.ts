@@ -1,10 +1,10 @@
-// Usage: node plugin/scripts/wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude GLOB]... [--strict] [--format json|markdown]
+// Usage: node plugin/scripts/wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude GLOB]... [--only ID[,ID]...] [--strict] [--format json|markdown]
 // Read-only wiki health check. Exit 0 ok (1 with --strict and issues), 1 vault resolution error, 2 bad usage.
 import { resolveVault, ConfigError } from "../lib/config.ts";
-import { lintVault, renderMarkdown, validDate } from "../lib/lint.ts";
+import { CHECKS, lintVault, renderMarkdown, validDate } from "../lib/lint.ts";
 
 const USAGE =
-  "Usage: node wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude GLOB]... [--strict] [--format json|markdown]";
+  "Usage: node wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude GLOB]... [--only ID[,ID]...] [--strict] [--format json|markdown]";
 
 function versionOk(v: string): boolean {
   const [maj, min] = v.split(".").map(Number);
@@ -27,6 +27,7 @@ function main(argv: string[]): number {
   let strict = false;
   let format = "json";
   const exclude: string[] = [];
+  let only: string[] | undefined;
   const value = (i: number): string | undefined => (i + 1 < argv.length && !argv[i + 1].startsWith("--") ? argv[i + 1] : undefined);
   const bad = (): number => {
     process.stderr.write(`${USAGE}\n`);
@@ -35,7 +36,7 @@ function main(argv: string[]): number {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--strict") strict = true;
-    else if (a === "--start" || a === "--as-of" || a === "--exclude" || a === "--format") {
+    else if (a === "--start" || a === "--as-of" || a === "--exclude" || a === "--format" || a === "--only") {
       const v = value(i);
       if (v === undefined) return bad();
       i++;
@@ -44,6 +45,16 @@ function main(argv: string[]): number {
         if (!validDate(v)) return bad();
         asOf = v;
       } else if (a === "--exclude") exclude.push(v);
+      else if (a === "--only") {
+        const ids = v.split(",");
+        const valid = CHECKS.map((c) => c.id);
+        const unknown = ids.filter((id) => !valid.includes(id));
+        if (unknown.length) {
+          process.stderr.write(`Unknown check id: ${unknown.map((u) => JSON.stringify(u)).join(", ")}. Valid ids: ${valid.join(", ")}\n`);
+          return 2;
+        }
+        only = [...(only ?? []), ...ids];
+      }
       else {
         if (v !== "json" && v !== "markdown") return bad();
         format = v;
@@ -53,7 +64,7 @@ function main(argv: string[]): number {
   try {
     const resolved = resolveVault(start);
     for (const w of resolved.warnings) process.stderr.write(`warning: ${w}\n`);
-    const report = lintVault(resolved, { asOf, exclude });
+    const report = lintVault(resolved, { asOf, exclude, only });
     process.stdout.write(format === "markdown" ? `${renderMarkdown(report)}\n` : `${JSON.stringify(report, null, 2)}\n`);
     return strict && report.summary.issues_found > 0 ? 1 : 0;
   } catch (e) {

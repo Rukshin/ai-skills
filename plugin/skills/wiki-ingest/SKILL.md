@@ -4,14 +4,14 @@ description: "Trigger: /wiki-ingest or user says 'ingest this', 'add to wiki', '
 license: MIT
 metadata:
   author: jordi.pulido
-  version: 2.1.1
+  version: 2.2.0
 allowed-tools: Bash, Read, Write, Edit, WebFetch, AskUserQuestion
 ---
 
 
 ## Activation Contract
 
-Load when the user invokes `/wiki-ingest`, drops a file path inside `{raw}` or a URL to compile into `{wiki_root}`, or says "ingest this", "add this to the wiki", or "process this article".
+Load when the user invokes `/wiki-ingest`, drops a file path inside `{raw}` or a URL to compile into `{wiki_root}`, or says "ingest this", "add this to the wiki", or "process this article". Also load when the user asks what is pending to ingest, or runs the skill without naming a source.
 
 ## Hard Rules
 
@@ -34,6 +34,10 @@ Areas share root `{index}`, `{hot}`, `{log}`; only page folders are per-area.
 |-----------|-------------|
 | source under `{raw}/<area>/` or user names `<area>` listed in `areas` | `{wiki_root}/<area>/` |
 | otherwise | `{wiki_root}/` |
+
+| Request | Action |
+|---------|--------|
+| asks what is pending, or no source named | run `node <skill-dir>/scripts/wiki-lint.ts --only manifest-drift --start "$PWD"`; list only `kind: "unmanifested"` issues as a numbered candidate list (path, size, extension); ask which to ingest; start nothing until the user chooses. See [details](references/details.md) |
 
 | Manifest state | Action |
 |----------------|--------|

@@ -13,6 +13,8 @@ export interface Issue {
   severity: "error" | "warning";
   message: string;
   fix_hint?: string;
+  /** manifest-drift only, and only when `only` is set: what kind of drift this is. */
+  kind?: "unmanifested" | "hash-mismatch" | "missing-pages";
 }
 export interface CheckResult {
   id: string;
@@ -28,6 +30,8 @@ export interface Report {
 export interface LintOptions {
   asOf: string;
   exclude: string[];
+  /** Run and report only these check ids (canonical order). Adds `kind` to manifest-drift issues. */
+  only?: string[];
 }
 
 export const CHECKS: { id: string; name: string }[] = [
@@ -182,7 +186,11 @@ export function lintVault(resolved: Resolved, opts: LintOptions): Report {
   const live = pages.filter((p) => !p.excluded);
   const content = live.filter((p) => !p.operational);
   const results: Record<string, Issue[]> = Object.fromEntries(CHECKS.map((c) => [c.id, []]));
-  const push = (id: string, issue: Issue) => results[id].push(issue);
+  const push = (id: string, issue: Issue) => {
+    // `kind` stays out of the default output so it is byte-identical to before --only existed.
+    if (!opts.only) delete issue.kind;
+    results[id].push(issue);
+  };
 
   // Resolve every link once.
   const resolved_ = new Map<Page, { link: WikiLink & { fm: boolean }; targets: string[] }[]>();
@@ -365,7 +373,8 @@ export function lintVault(resolved: Resolved, opts: LintOptions): Report {
     });
   }
 
-  const checks: CheckResult[] = CHECKS.map((c) => ({
+  const selected = opts.only ? CHECKS.filter((c) => opts.only!.includes(c.id)) : CHECKS;
+  const checks: CheckResult[] = selected.map((c) => ({
     id: c.id,
     name: c.name,
     issues: results[c.id].sort((a, b) => a.path.localeCompare(b.path) || (a.line ?? 0) - (b.line ?? 0) || a.message.localeCompare(b.message)),
@@ -421,6 +430,7 @@ function manifestDrift(
         push(id, {
           path: rel,
           severity: "warning",
+          kind: "hash-mismatch",
           message: `Hash mismatch (${how}): source changed since ingest`,
           fix_hint: "Re-ingest the source (new entries use sha256) or confirm the change is intended",
         });
@@ -432,6 +442,7 @@ function manifestDrift(
           push(id, {
             path: manifestRel,
             severity: "warning",
+            kind: "missing-pages",
             message: `Page in pages_created no longer exists: ${page} (source ${key})`,
             fix_hint: "Remove it from the entry or restore the page",
           });
@@ -444,6 +455,7 @@ function manifestDrift(
     push(id, {
       path: rel,
       severity: "warning",
+      kind: "unmanifested",
       message: "Raw file is not in the manifest",
       fix_hint: "Ingest it with wiki-ingest, or delete it if it is not needed",
     });

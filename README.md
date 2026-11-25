@@ -78,11 +78,13 @@ node plugin/scripts/wiki-config.ts [--start DIR]   # JSON on stdout; exit 0 ok, 
 `wiki-lint` is a read-only script: it never writes to the vault. It resolves the vault like `wiki-config`, runs eight checks (`dead-links`, `orphans`, `frontmatter-gaps`, `up-chain`, `index-drift`, `manifest-drift`, `stale-contradictions`, `empty-sections`) and prints a JSON report (or markdown).
 
 ```bash
-node plugin/scripts/wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude GLOB]... [--strict] [--format json|markdown]
+node plugin/scripts/wiki-lint.ts [--start DIR] [--as-of YYYY-MM-DD] [--exclude GLOB]... [--only ID[,ID]...] [--strict] [--format json|markdown]
 # exit 0 ok (1 with --strict and issues), 1 no vault / invalid config, 2 bad usage
 ```
 
 `--exclude` globs match vault-relative paths (`Atlas/Wiki/Fiction/**`) or bare file names (`Stale.md`); excluded files are not reported but still resolve links. Dot-directories are skipped.
+
+`--only` runs and reports just the listed check ids (comma-separated or repeated; an unknown id exits 2 and lists the valid ones); `summary.by_check` and `issues_found` then cover only those checks. With `--only`, each `manifest-drift` issue also has a `kind` (`unmanifested`, `hash-mismatch`, `missing-pages`); `--only manifest-drift` with `kind: "unmanifested"` is the list of raw files pending ingest. Default output is unchanged.
 
 `wiki-hash` prints a file's hash for the ingest manifest. New manifest entries use sha256; entries without `hash_algo` are legacy md5 (format: `plugin/_shared/cli-commands.md`).
 
