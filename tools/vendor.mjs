@@ -10,7 +10,7 @@ const plugin = join(root, "plugin");
 
 // Entry scripts each skill runs; lib files follow from their imports.
 export const SKILL_SCRIPTS = {
-  "wiki-ingest": ["wiki-config.ts", "wiki-hash.ts"],
+  "wiki-ingest": ["wiki-config.ts", "wiki-hash.ts", "wiki-lint.ts"],
   "wiki-lint": ["wiki-config.ts", "wiki-lint.ts"],
   "wiki-query": ["wiki-config.ts", "wiki-search.ts"],
   "wiki-save": ["wiki-config.ts"],

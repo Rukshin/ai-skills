@@ -2,6 +2,17 @@
 
 Run against `/tmp/pkm-scenario-run` (see `README.md`). Vault config resolves from `Atlas/Wiki/SCHEMA.md`; raw dir is `+/raw/`, manifest `+/raw/.manifest.json`. Existing manifest entries are legacy (no `hash_algo`, md5 hashes). Housekeeping order: index, log, hot, manifest. Log entry format: `## [YYYY-MM-DD] ingest | <Title>` followed by `Pages created:` / `Pages updated:` wikilink lines.
 
+## I0 Pending list
+
+- **Prompt:** "what is pending to ingest?" (also: `/wiki-ingest` with no source).
+- **Fixture:** vault with raw files, some in the manifest and some not (for example `+/raw/untracked.md`, a `.pdf`).
+- **Expected:** agent runs `wiki-lint.ts --only manifest-drift --start "$PWD"` and presents only the `unmanifested` raw files as a numbered candidate list (path, size, extension), noting that PDFs and non-markdown files may need a different extractor and that files intentionally left in raw also appear. It asks which to ingest. Nothing is written and no ingest starts.
+- **Checklist:**
+  - [ ] command used is lint `--only manifest-drift`, no other script
+  - [ ] only `unmanifested` files listed (no hash-mismatch or missing-pages items)
+  - [ ] numbered list with path, size, extension
+  - [ ] asks which to ingest; no plan, no takeaways, no write (`git status --short` empty)
+
 ## I1 New source
 
 - **Prompt:** `/wiki-ingest +/raw/Evergreen Habits.md`

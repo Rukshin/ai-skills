@@ -4,7 +4,7 @@ description: "Trigger: /wiki-lint or 'health check the wiki', 'wiki needs mainte
 license: MIT
 metadata:
   author: jordi.pulido
-  version: 3.1.0
+  version: 3.2.0
 allowed-tools: Bash, Read, Write, Edit, AskUserQuestion
 ---
 
@@ -15,12 +15,12 @@ Load on `/wiki-lint`, "health check the wiki", "clean up the wiki", or after the
 ## Hard Rules
 
 - The script is read-only and the report lives in the chat. Write nothing to the vault until the user approves a plan.
-- File tools are primary. The `obsidian` CLI is optional: use `timeout 20 obsidian ...` and fall back to file tools on failure.
+- File tools are primary; the `obsidian` CLI is optional (`timeout 20 obsidian ...`, fall back on failure).
 - Read `{wiki_root}/SCHEMA.md` before proposing fixes (naming and structure rules).
 - Exempt from frontmatter checks: `{index}`, `{hot}`, `{log}`, `SCHEMA.md`, `lint-*.md`.
 - Never delete or merge pages unilaterally; present them for review first.
 - Among duplicate pages and conflicting claims, the survivor is always the one whose ORIGINAL source is linked, unless there is a refutation with a clear reference. It decides the proposal only; merge/delete stays a plan line the user approves. See `references/survivor-rule.md`.
-- Never apply a fix, even a safe one, before the user approves the plan.
+- Never apply a fix before the user approves the plan.
 - Write `lint-YYYY-MM-DD.md` or a `{log}` entry only if the user asks or fixes were applied.
 
 ## Decision Gates
@@ -51,12 +51,12 @@ Load on `/wiki-lint`, "health check the wiki", "clean up the wiki", or after the
 ## Output Contract
 
 - Chat report: summary table (check, issues), issues per check, judgment findings.
-- Chat plan: fixes awaiting approval, or "no changes proposed".
-- Files: none by default; only approved edits, plus a lint page or log entry per step 7.
+- Chat plan: fixes awaiting approval, or none proposed.
+- Files: none by default; only approved edits and step 7 records.
 
 ## References
 
-- `scripts/wiki-lint.ts` — checks, report format, options
+- `scripts/wiki-lint.ts` — checks, report, options (`--only ID[,ID]`; pending ingest: `--only manifest-drift`, `kind: unmanifested`)
 - `references/survivor-rule.md` — original source, clear reference, examples
 - `references/cli-commands.md` — obsidian CLI, manifest format
 - `{wiki_root}/SCHEMA.md` (vault) — naming, frontmatter, page types

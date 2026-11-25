@@ -5,6 +5,9 @@ Long-form detail moved out of SKILL.md. The rules in SKILL.md remain authoritati
 ## CLI and file tools
 File tools (Read/Write/Edit/Bash) are primary. The `obsidian` CLI is optional: it hangs indefinitely when Obsidian is closed, so run it with a time limit (e.g. `timeout 20 obsidian ...`) and fall back to file tools on failure or timeout.
 
+## Pending list
+When the user asks what is pending to ingest, or runs the skill without a source, run `node <skill-dir>/scripts/wiki-lint.ts --only manifest-drift --start "$PWD"` (read-only). Keep only issues with `kind: "unmanifested"` (ignore `hash-mismatch` and `missing-pages`). Show a numbered list: path, size, extension. PDFs and other non-markdown files may need a different extractor. Files intentionally left in raw (test fixtures, prompt traps) also appear; the user decides. Ask which to ingest; write nothing and start no ingest until the user chooses. An empty list means nothing is pending.
+
 ## Page budget
 Read at most 5 existing wiki pages per ingest, chosen with `{hot}` and `{index}`. Reading `{wiki_root}/SCHEMA.md`, `{hot}`, `{index}` and `{log}` does not count toward the 5.
 

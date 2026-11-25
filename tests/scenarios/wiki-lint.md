@@ -55,3 +55,12 @@ The script may also print a marksman warning ("coverage: marksman silent"); the 
   - [ ] resolved callout format proposed with the winning source named
   - [ ] plan + approval required; `git status --short` empty before approval
   - [ ] no page deleted or merged without explicit approval
+
+## L4 Selected checks with `--only`
+
+- **Prompt:** "what is pending to ingest?" or `/wiki-lint` limited to one check.
+- **Expected:** agent runs `wiki-lint.ts --only manifest-drift --start "$PWD"` (ids comma-separated or repeated; an unknown id exits 2 listing the valid ids). Output contains only the selected checks, `issues_found` counts only them, and manifest-drift issues carry `kind` (`unmanifested`, `hash-mismatch`, `missing-pages`). Pending files are the `unmanifested` ones. Nothing is written.
+- **Checklist:**
+  - [ ] `summary.by_check` lists only the selected checks
+  - [ ] pending list shows only `unmanifested` issues
+  - [ ] `git status --short` empty
