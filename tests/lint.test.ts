@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { mkdtempSync, mkdirSync, writeFileSync, readdirSync, readFileSync, statSync, realpathSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
@@ -272,4 +273,71 @@ test("exits 1 with the searched directories when no vault resolves", () => {
   assert.equal(r.status, 1);
   assert.equal(r.stdout, "");
   assert.match(r.stderr, /No wiki vault found/);
+});
+
+// --- --only ---
+
+const sha = (s: string) => createHash("sha256").update(s).digest("hex");
+const norm = (s: string) => s.split(vault).join("<root>");
+
+test("without --only the JSON and markdown output is byte-identical to the pre-flag output", () => {
+  const j = run(["--start", vault, "--as-of", AS_OF]);
+  const m = run(["--start", vault, "--as-of", AS_OF, "--format", "markdown"]);
+  assert.equal(sha(norm(j.stdout)), "9a7dc05ad10bd4f97e262af934a102efab4841a34af9d0e38a1a4f26dbd399e0");
+  assert.equal(sha(norm(m.stdout)), "b36bca75627f6549eb3f31387d3f281561ffe61bb21fb561347ecc9adbef2bcb");
+  assert.ok(!j.stdout.includes('"kind"'));
+});
+
+test("--only runs and reports just the selected checks, in canonical order", () => {
+  const r = lint(["--only", "orphans,dead-links"]);
+  assert.deepEqual(r.checks.map((c: any) => c.id), ["dead-links", "orphans"]);
+  assert.deepEqual(r.summary.by_check, { "dead-links": 3, orphans: 1 });
+  assert.equal(r.summary.issues_found, 4);
+  assert.deepEqual(brief(issuesOf(r, "orphans")), ["warning Wiki/Orphan Page.md No inbound links from other content pages"]);
+  const md = run(["--start", vault, "--as-of", AS_OF, "--only", "orphans", "--format", "markdown"]);
+  assert.match(md.stdout, /Issues found: 1/);
+  assert.doesNotMatch(md.stdout, /Dead links/);
+});
+
+test("--only is repeatable and --strict only counts the selected checks", () => {
+  const r = lint(["--only", "orphans", "--only", "empty-sections"]);
+  assert.deepEqual(r.checks.map((c: any) => c.id), ["orphans", "empty-sections"]);
+  assert.equal(r.summary.issues_found, 3);
+  const clean = run(["--start", vault, "--as-of", "2025-12-20", "--only", "stale-contradictions", "--strict"]);
+  assert.equal(clean.status, 0);
+  assert.equal(JSON.parse(clean.stdout).summary.issues_found, 0);
+});
+
+test("--only manifest-drift tags each issue with a kind", () => {
+  const r = lint(["--only", "manifest-drift"]);
+  assert.deepEqual(r.checks.map((c: any) => c.id), ["manifest-drift"]);
+  assert.equal(r.summary.issues_found, 4);
+  assert.deepEqual(
+    issuesOf(r, "manifest-drift").map((i: any) => [i.path, i.kind]),
+    [
+      ["raw/.manifest.json", "missing-pages"],
+      ["raw/changed-md5.md", "hash-mismatch"],
+      ["raw/changed-sha.md", "hash-mismatch"],
+      ["raw/untracked.md", "unmanifested"],
+    ],
+  );
+});
+
+test("--only with an unknown id exits 2, lists the valid ids, prints nothing on stdout", () => {
+  for (const v of ["nope", "orphans,nope", "orphans,"]) {
+    const r = run(["--start", vault, "--only", v]);
+    assert.equal(r.status, 2, v);
+    assert.equal(r.stdout, "");
+    for (const id of CHECKS) assert.ok(r.stderr.includes(id), `${v}: ${id}`);
+  }
+  const noValue = run(["--start", vault, "--only"]);
+  assert.equal(noValue.status, 2);
+  assert.match(noValue.stderr, /Usage: node wiki-lint\.ts/);
+});
+
+test("--only never changes any file in the vault", () => {
+  const before = snapshot(vault);
+  lint(["--only", "manifest-drift,orphans"]);
+  run(["--start", vault, "--as-of", AS_OF, "--only", "manifest-drift", "--format", "markdown", "--strict"]);
+  assert.deepEqual(snapshot(vault), before);
 });
